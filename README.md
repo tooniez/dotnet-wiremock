@@ -37,3 +37,6 @@ These instructions will get you a copy of the project up and running on your loc
     ```
 
 ### License
+
+Copyright © 2024 [tooniez](https://github.com/tooniez)
+This project is [MIT](https://github.com/tooniez/dotnet-wiremock/blob/main/LICENSE) licensed.
