@@ -1,0 +1,31 @@
+name: Update Changelog
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Generate Changelog and Push Changes
+        run: |
+          git config --local user.email "tooni22@proton.me"
+          git config --local user.name "tooniez"
+          npx standard-version
+          git add CHANGELOG.md
+          git commit -m "chore(release): Update changelog"
+          git push --follow-tags origin main

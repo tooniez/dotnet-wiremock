@@ -1,0 +1,26 @@
+name: .NET Format Check
+
+on: [push, pull_request]
+
+jobs:
+    restore:
+
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v1
+          with:
+                dotnet-version: '5.0.x'
+
+    format-check:
+        needs: restore
+
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Check format
+          run: dotnet format --check

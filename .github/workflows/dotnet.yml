@@ -1,0 +1,40 @@
+name: .NET Build and Test
+
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+
+jobs:
+    build:
+
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v1
+          with:
+                dotnet-version: 5.0.x
+
+        - name: Build
+          run: dotnet build --no-restore
+
+    test:
+        needs: build
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Test
+          run: dotnet test --no-build --verbosity normal
+
+
+    publish:
+        needs: test
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Publish
+          run: dotnet publish --no-build --configuration Release --output ./publish
