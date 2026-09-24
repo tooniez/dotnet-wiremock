@@ -1,0 +1,12 @@
+{
+  "name": "dotnet-wiremock",
+  "version": "1.0.0",
+  "description": "WireMock.Net for .NET",
+  "private": true,
+  "devDependencies": {
+    "standard-version": "^9.5.0"
+  },
+  "scripts": {
+    "release": "npx standard-version"
+  }
+}

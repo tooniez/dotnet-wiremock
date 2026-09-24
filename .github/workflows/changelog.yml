@@ -8,24 +8,29 @@ on:
 jobs:
   update-changelog:
     runs-on: ubuntu-latest
+    if: github.event.commits[0].author.id != github.event.pusher.id
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 22.x
 
       - name: Install Dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
 
       - name: Generate Changelog and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --local user.email "tooni22@proton.me"
-          git config --local user.name "tooniez"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           npx standard-version
           git add CHANGELOG.md
-          git commit -m "chore(release): Update changelog"
-          git push --follow-tags origin main
+          git commit -m "chore(release): Update changelog" || echo "No changes"
+          git push || echo "Push skipped"
