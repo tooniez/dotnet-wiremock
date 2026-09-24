@@ -5,11 +5,11 @@ using WireMock.Server;
 
 class Program
 {
-static void Main(string[] args)
-{
+  static void Main(string[] args)
+  {
     int port;
     if (args.Length == 0 || !int.TryParse(args[0], out port))
-        port = 8080;
+      port = 8080;
 
     var server = WireMockServer.Start(port);
     Console.WriteLine("WireMockServer running at {0}", string.Join(",", server.Ports));
@@ -60,5 +60,5 @@ static void Main(string[] args)
 
     Console.WriteLine("Press any key to quit");
     Console.ReadKey();
-}
+  }
 }
